@@ -3,10 +3,12 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+
 
 const videos = [
   {
-    title: "Bag. 1 Auditor Keuangan",
+    title: "Bag. 1 Auditor Keuangan", // ini kalau diklik lari ke detailprodukpage
     rating: 4.8,
     enrolled: 2000,
     level: "Pemula",
@@ -83,8 +85,13 @@ const videos = [
 const Homepage = () => {
   const navigate = useNavigate();
 
+  const handleCardClick = () => {
+    navigate("/detailproduk");
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#F3F4F6]">
+      
       <Header />
 
       <main className="flex-1">

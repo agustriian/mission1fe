@@ -23,7 +23,7 @@ const Header = () => {
             Kategori
           </span>
           <img
-            src="https://i.pravatar.cc/40" // ganti ini dengan foto profil user kalau ada
+            src="https://s3-alpha-sig.figma.com/img/0577/f0e9/b7fca2f32639871454da0de95f951709?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=dXVMV6rrkxA-R2j3YwxZMpcdTunisBzXuSs~BTFVNyg~8VmmgHHXmlfZJc~JgjsHCxkzud6Jt~r7fTNdF3nZakuH9Pt7prTL14rZ0UgjLBcFK3Q39C2qsGCE60~jYuco~8TbxP7MPvCBLAwn9Bll0DuGs91Eo2QEqh7aDschYnrcLjcW0eCJ0u1wNXb4vgJE6BO5NjFSvgIVOlGNvHh7jqa9fU4xdQchPehzgd5hUYD3QYTGCmwi0i9AUSZHDrjvyFeSudc9IwroUtvlUI-5IMEN1E8DwPeINDsQJIseowVNvyZ1WUyHJ73WY0SB1gGfGpoZFEPGr3fHfZv292Jsyg__" 
             alt="User Avatar"
             className="w-10 h-10 rounded-full object-cover"
           />
