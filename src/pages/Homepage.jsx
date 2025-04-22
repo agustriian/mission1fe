@@ -1,12 +1,10 @@
 // src/pages/Homepage.jsx
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
 
-
-const videos = [
+const defaultVideos = [ 
   {
     title: "Bag. 1 Auditor Keuangan", // ini kalau diklik lari ke detailprodukpage
     rating: 4.8,
@@ -79,54 +77,98 @@ const videos = [
     price: "Rp 270K",
     image: "https://s3-alpha-sig.figma.com/img/a645/a5cd/223894f5f60f082c31a25b5a29935827?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=UX7bDDHONDxOW59Y-j8587Gx7AEa0cYlcTl3Rpg45LilxV2deK1PjkNJe99K9pqmY6d0pd~yuga7bJxX9BgwoTeTrao5b6fM7NPsvS3w3hNKsJLuIDem-dyWG5RaoXFhIKTxtxdtJJ5F4abR3bEMJ78nxfJqWxpltffeb~0J27fOqPzX7YQJ5MgxPtWBcAC9Zf4sOgNUwQMplkG0FOmlT2bLHd6J4oOyXJi7UC3TKIOjHMqjCTRU3fnaxO5ST-BeqixhUarsOF8kncP9-3iW1Q--f39bYtxM7kfmOw9v-pKTUL4GgrWXq65F73UcPH9Ai1j-wvGms3zyq3u~DJPkbA__",
   },
-];
-
+ ];
 
 const Homepage = () => {
   const navigate = useNavigate();
+
+  const [userName, setUserName] = useState("Agustrianto");
+  const [videos, setVideos] = useState(defaultVideos);
 
   const handleCardClick = () => {
     navigate("/detailproduk");
   };
 
+  const handleEditName = () => {
+    const newName = prompt("Masukkan nama baru:", userName);
+    if (newName) setUserName(newName);
+  };
+
+  const handleAddVideo = () => {
+    const newVideo = {
+      title: "Video Baru",
+      rating: 5.0,
+      enrolled: 0,
+      level: "Pemula",
+      price: "Gratis",
+      image: "https://images.unsplash.com/photo-1581090700227-1e8f1d7cbd28?fit=crop&w=600&q=80"
+
+    };
+    setVideos([...videos, newVideo]);
+  };
+
+  const handleDeleteVideo = (index) => {
+    const updated = [...videos];
+    updated.splice(index, 1);
+    setVideos(updated);
+  };
+
+  const handleEditVideo = (index) => {
+    const current = videos[index];
+  
+    const newTitle = prompt("Edit judul:", current.title);
+    const newPrice = prompt("Edit harga:", current.price);
+    const newLevel = prompt("Edit level:", current.level);
+  
+    if (newTitle && newPrice && newLevel) {
+      const updated = [...videos];
+      updated[index] = {
+        ...current,
+        title: newTitle,
+        price: newPrice,
+        level: newLevel,
+      };
+      setVideos(updated);
+    }
+  };
+  
+
+
   return (
     <div className="flex flex-col min-h-screen bg-[#F3F4F6]">
-      
       <Header />
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="bg-white py-8 px-4 shadow-sm">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-6">
-            <img
-              src="https://s3-alpha-sig.figma.com/img/65ed/b9e6/d25fa2121b31a4ad14c9ebd02127f629?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=GpJKVZVV~6ViUnhJVU6C3ai3EKWWFtpw09zYbyrJ79yAWaUTcjfCI3DvTRybrDOjXDkWKh7Caa~oXIEiErcAnirERMG~kvSErXl-AEhITYTVjG9~U9ke~pWqcDTQJumzyxbA3CMHLeAgkjRImaZVD0UYups3Nvg7nTmPaanO92qQqc-MwzDuCuquFtQjU2osXi~uYVmTrNfHlfWVnB9g26YKriqJebfod8mwfKScpx4dyQUwRYuWzKhajX4reF8VHEGN4N5WUT7mhnE2hJrcBcQcg6wpsPMV~hxrblQ2xc5EHgXxTMdR6KzIfvoJFIPAeWEbr5f~BcPOwoMjDl41pA__"
-              alt="Hero"
-              className="w-full md:w-1/2 rounded-xl shadow"
-            />
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-snug">
-                Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!
-              </h1>
-              <p className="text-gray-600 mb-6">
-                Temukan Ilmu Baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi. Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan interaktif yang akan meningkatkan pemahaman Anda.
-                  </p>
-              <button
-                onClick={() => navigate("/register")}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow transition"
-              >
-                Temukan Video Course untuk Dipelajari!
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* Sapaan */}
+        <div className="max-w-6xl mx-auto px-4 mt-6 mb-2">
+          <h2 className="text-lg font-semibold">
+            Halo, {userName}!{" "}
+            <button
+              onClick={handleEditName}
+              className="text-blue-600 underline text-sm ml-2"
+            >
+              Edit
+            </button>
+          </h2>
+        </div>
 
-        {/* Kategori Tabs */}
+        {/* Tombol Tambah Video */}
+        <div className="max-w-6xl mx-auto px-4 mb-4">
+          <button
+            onClick={handleAddVideo}
+            className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700"
+          >
+            Tambah Video Baru
+          </button>
+        </div>
+
+        {/* Hero dan Kategori (tidak diubah) */}
+        {/* ... lanjutkan dari kode aslimu di sini ... */}
+
         <section className="max-w-6xl mx-auto mt-10 px-4">
           <h2 className="text-xl font-semibold mb-4">Koleksi Video Pembelajaran Unggulan</h2>
           <div className="flex gap-4 text-sm md:text-base font-medium mb-6">
-            <button className="text-orange-600 border-b-2 border-orange-600 pb-1">
-              Semua Video
-            </button>
+            <button className="text-orange-600 border-b-2 border-orange-600 pb-1">Semua Video</button>
             <button className="text-gray-600 hover:text-orange-600">Pemasaran</button>
             <button className="text-gray-600 hover:text-orange-600">Desain</button>
             <button className="text-gray-600 hover:text-orange-600">Keuangan</button>
@@ -144,13 +186,28 @@ const Homepage = () => {
                     ⭐ {video.rating} &nbsp;•&nbsp; 👤 {video.enrolled} &nbsp;•&nbsp; 🎯 {video.level}
                   </div>
                   <p className="text-green-600 font-bold">{video.price}</p>
+                  <div className="flex justify-between items-center mt-2">
+  <button
+    onClick={() => handleDeleteVideo(index)}
+    className="text-sm text-red-600 hover:underline"
+  >
+    Hapus
+  </button>
+  <button
+    onClick={() => handleEditVideo(index)}
+    className="text-sm text-blue-600 hover:underline"
+  >
+    Edit
+  </button>
+</div>
+
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Subscription Section */}
+        {/* Subscription Section - tetap */}
         <section className="mt-16 bg-white py-10 px-4 shadow-inner">
           <div className="max-w-2xl mx-auto text-center">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Mau Belajar Lebih Banyak?</h3>
